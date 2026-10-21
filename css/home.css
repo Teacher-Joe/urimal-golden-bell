@@ -1,0 +1,22 @@
+.home-page { min-height: 100vh; }
+.home { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 70px 16px 40px; text-align: center; }
+.home .bell { width: clamp(120px, 20vw, 200px); }
+.home h1 { font-size: clamp(48px, 9vw, 110px); margin: 0; }
+.slogan { font-size: clamp(20px, 3.4vw, 34px); font-weight: 900; margin: 0 0 10px; }
+.slogan b { color: var(--gold); }
+.home-card { width: min(100%, 620px); padding: 22px; border-radius: 22px; background: rgba(10,14,40,.88); border: 3px solid var(--gold); text-align: left; box-shadow: 0 20px 50px rgba(0,0,0,.6); }
+.home-card.student { border-color: var(--select); }
+.home-card h2 { margin: 0 0 12px; }
+.home-card label { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; font-weight: 800; }
+.home-card input, .home-card select { min-height: 50px; padding: 8px 12px; font-size: 20px; border-radius: 12px; background: #0b1336; border: 2px solid rgba(255,255,255,.3); }
+.home-card .btn.big { width: 100%; margin-top: 8px; }
+.err { color: var(--bad); font-weight: 800; min-height: 1.3em; }
+.recent { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.recent h3 { width: 100%; margin: 0; font-size: 16px; color: var(--muted); }
+.recent .btn { text-decoration: none; }
+.links a { color: var(--gold); font-weight: 800; }
+.who { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.home-card h3 { margin: 16px 0 4px; }
+.recent .btn { justify-content: flex-start; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }

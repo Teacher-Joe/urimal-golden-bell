@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>발표 화면 · 우리말 골든벨</title>
+  <link rel="icon" href="img/bell.svg">
+  <link rel="stylesheet" href="css/stage.css">
+  <link rel="stylesheet" href="css/display.css">
+</head>
+<body class="display-page" data-phase="lobby">
+  <div class="theater-deco" aria-hidden="true">
+    <div class="spot s1"></div><div class="spot s2"></div><div class="spot s3 center-spot"></div>
+    <div class="floor"></div>
+    <div class="curtain left"></div><div class="curtain right"></div>
+    <div class="valance"></div>
+  </div>
+  <canvas class="dust" aria-hidden="true"></canvas>
+  <canvas class="confetti" aria-hidden="true"></canvas>
+  <div class="reveal-lights" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+  <main class="stage">
+    <!-- 입장·대기 -->
+    <section id="lobby" class="lobby">
+      <div id="lobbyBell" class="bell big"></div>
+      <h1 class="title gold-text">우리말 골든벨</h1>
+      <p class="slogan">우리말의 뜻을 듣고, <b>숨은 노래</b>를 찾아라!</p>
+      <div id="lobbyTeams" class="lobby-teams"></div>
+    </section>
+
+    <!-- 문제 진행 -->
+    <section id="play" class="play" hidden>
+      <div class="play-top">
+        <div id="qNo" class="led q-no">제1문제</div>
+        <div id="phaseTitle" class="phase-title">귀를 기울여 주세요!</div>
+        <div class="timer-wrap">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle id="ringFg" cx="60" cy="60" r="52" class="ring-fg"/></svg>
+          <div id="timer" class="led timer">30</div>
+        </div>
+      </div>
+
+      <div id="listen" class="listen">
+        <div class="mic-wrap">
+          <div class="waves" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <svg class="mic" viewBox="0 0 100 140" aria-hidden="true">
+            <defs><linearGradient id="micG" x1="0" x2="1"><stop offset="0" stop-color="#8a5a00"/><stop offset=".5" stop-color="#fff0a8"/><stop offset="1" stop-color="#8a5a00"/></linearGradient></defs>
+            <rect x="30" y="6" width="40" height="66" rx="20" fill="url(#micG)" stroke="#5c3600" stroke-width="3"/>
+            <path d="M34 22h32M34 34h32M34 46h32M34 58h32" stroke="#7a4a00" stroke-width="2"/>
+            <path d="M18 54c0 22 14 34 32 34s32-12 32-34" stroke="#f7c948" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <rect x="46" y="88" width="8" height="30" fill="#f7c948"/><rect x="26" y="118" width="48" height="10" rx="5" fill="#f7c948"/>
+          </svg>
+          <div class="waves right" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <div id="lyricText" class="lyric-text" hidden></div>
+      <div id="choices" class="choices"></div>
+      <div class="play-bottom">
+        <div id="answered" class="answered"></div>
+        <div id="presenter" class="presenter-note"></div>
+      </div>
+      <div id="revealBox" class="reveal-box" hidden></div>
+      <div id="scoreStrip" class="score-strip" hidden></div>
+    </section>
+
+    <!-- 최종 점수판(시상식) -->
+    <section id="final" class="final" hidden>
+      <h1 class="gold-text final-title">🏆 우리말 골든벨 시상식</h1>
+      <div id="podium" class="podium"></div>
+      <ol id="finalList" class="final-list"></ol>
+      <p class="final-cheer">모든 조가 고운 우리말로 멋진 노래를 만들었어요. 모두에게 큰 박수! 👏</p>
+    </section>
+  </main>
+
+  <div id="stamp" class="stamp" hidden>선택 마감!</div>
+  <div id="drum" class="drum" hidden><div class="drum-text">두구두구두구…</div></div>
+  <div id="pauseBox" class="pause-box" hidden>⏸ 잠시 멈춤</div>
+
+  <!-- 소리 켜기 (브라우저 자동 재생 제한 대비) -->
+  <div id="soundGate" class="sound-gate">
+    <div class="gate-box">
+      <div id="gateBell" class="bell"></div>
+      <h2 class="gold-text">우리말 골든벨 발표 화면</h2>
+      <p id="gateNote">이 화면에서 음성(TTS)과 효과음을 낼까요?<br>소리는 한 기기에서만 나요.</p>
+      <div class="gate-actions">
+        <button id="soundOn" class="btn gold big" type="button">🔊 소리 켜고 시작하기</button>
+        <button id="soundOff" class="btn ghost big" type="button">🔇 소리 없이 화면만 보기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="corner">
+    <span id="conn" class="conn">연결 중…</span>
+    <span id="soundState" class="conn">소리 꺼짐</span>
+    <button id="soundBtn" class="btn small ghost" type="button">🔊 소리</button>
+    <button id="fsBtn" class="btn small ghost" type="button">⛶ 전체 화면</button>
+  </div>
+  <div id="intro" class="intro-overlay" hidden><div class="ic l"></div><div class="ic r"></div><div id="introText" class="it gold-text">제1문제!</div></div>
+  <div id="fatal" class="fatal-screen" hidden></div>
+
+  <script type="module" src="js/display.js"></script>
+</body>
+</html>

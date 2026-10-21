@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>교사 화면 · 우리말 골든벨</title>
+  <link rel="icon" href="img/bell.svg">
+  <link rel="stylesheet" href="css/stage.css">
+  <link rel="stylesheet" href="css/teacher.css">
+</head>
+<body class="teacher-page">
+  <!-- 교사 로그인(구글 계정) -->
+  <section id="login" class="login" hidden>
+    <div class="login-box">
+      <h1 class="gold-text">🔔 교사 로그인</h1>
+      <p>수업방을 만든 <b>구글 계정</b>으로 로그인하면 수업방을 그대로 이어서 진행할 수 있어요.</p>
+      <div id="loginErr" class="err-text" role="alert"></div>
+      <button id="loginBtn" class="btn gold big" type="button">G 구글 계정으로 로그인</button>
+      <p><a href="index.html">← 처음 화면으로</a></p>
+    </div>
+  </section>
+
+  <div id="app" hidden>
+    <header class="t-header">
+      <div class="t-brand"><span class="t-bell">🔔</span><b>우리말 골든벨</b> <span class="muted">교사 화면</span></div>
+      <div class="t-room">방 코드 <b id="roomCode" class="led small-led">------</b></div>
+      <div class="t-status">
+        <span id="conn" class="conn">연결 중…</span>
+        <span id="connTeams" class="conn">조 접속 0/0</span>
+        <span id="connDisplay" class="conn">발표 화면 없음</span>
+        <span id="soundChip" class="conn">소리 담당 없음</span>
+      </div>
+      <div class="t-actions">
+        <button id="openDisplay" class="btn small cyan" type="button">📺 발표 화면 열기</button>
+        <button id="soundHere" class="btn small gold" type="button">🔊 이 화면에서 소리 내기</button>
+        <a class="btn small ghost" href="index.html">🏠 내 수업방</a>
+        <button id="logoutBtn" class="btn small ghost" type="button" title="로그아웃">로그아웃 <small id="who"></small></button>
+      </div>
+    </header>
+    <div id="alerts" class="alerts" aria-live="polite"></div>
+
+    <nav class="t-tabs" role="tablist">
+      <button class="t-tab" data-tab="live" role="tab">🎬 무대 진행</button>
+      <button class="t-tab" data-tab="subs" role="tab">📥 작품 제출함 <span id="subCount" class="count-badge"></span></button>
+      <button class="t-tab" data-tab="questions" role="tab">📝 문제 관리</button>
+      <button class="t-tab" data-tab="teams" role="tab">👥 조·참여 주소</button>
+      <button class="t-tab" data-tab="settings" role="tab">⚙️ 환경설정</button>
+      <button class="t-tab" data-tab="backup" role="tab">💾 백업·마감</button>
+    </nav>
+
+    <main class="t-main">
+      <section id="tab-live" class="t-panel" data-tab="live"></section>
+      <section id="tab-subs" class="t-panel" data-tab="subs" hidden></section>
+      <section id="tab-questions" class="t-panel" data-tab="questions" hidden></section>
+      <section id="tab-teams" class="t-panel" data-tab="teams" hidden></section>
+      <section id="tab-settings" class="t-panel" data-tab="settings" hidden></section>
+      <section id="tab-backup" class="t-panel" data-tab="backup" hidden></section>
+    </main>
+  </div>
+
+  <dialog id="dlg" class="modal"><form method="dialog" id="dlgForm"></form></dialog>
+  <script src="lib/qrcode.min.js"></script>
+  <script type="module" src="js/teacher.js"></script>
+</body>
+</html>

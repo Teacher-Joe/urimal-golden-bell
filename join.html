@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1336">
+  <title>우리 조 작사가 대기실 · 우리말 골든벨</title>
+  <link rel="icon" href="img/bell.svg">
+  <link rel="stylesheet" href="css/stage.css">
+  <link rel="stylesheet" href="css/team.css">
+</head>
+<body class="team-page">
+  <div class="theater-deco" aria-hidden="true"><div class="spot s3"></div><div class="valance"></div></div>
+  <canvas class="dust" aria-hidden="true"></canvas>
+  <canvas class="confetti" aria-hidden="true"></canvas>
+
+  <header class="marquee">
+    <div class="bulbs" aria-hidden="true"></div>
+    <div class="marquee-inner">
+      <span class="star" aria-hidden="true">★</span>
+      <h1><span id="teamName" class="gold-text">우리 조</span> <span class="sub">작사가 대기실</span></h1>
+      <span class="star" aria-hidden="true">★</span>
+    </div>
+    <div class="marquee-meta">
+      <span id="conn" class="conn">연결 중…</span>
+      <span id="myScore" class="score-chip" hidden></span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tabWork" aria-selected="true" class="tab">🎤 작품 만들기</button>
+    <button role="tab" id="tabQuiz" aria-selected="false" class="tab">🔔 골든벨 퀴즈 <span id="quizBadge" class="badge" hidden>진행 중</span></button>
+  </nav>
+
+  <main>
+    <div id="fatal" class="fatal" hidden></div>
+
+    <!-- 작품 만들기 -->
+    <section id="work" class="panel" role="tabpanel" aria-labelledby="tabWork">
+      <div id="closedNote" class="note warn" hidden></div>
+      <div class="step">
+        <h2><span class="step-no">1</span> 우리 조가 고른 노래</h2>
+        <p class="hint">공연할 노래 포스터를 눌러 골라요. 다른 조와 같은 노래를 골라도 괜찮아요.</p>
+        <div id="workSongs" class="song-grid"></div>
+      </div>
+
+      <div class="step">
+        <h2><span class="step-no">2</span> 고유어로 바꾼 가사 쓰기</h2>
+        <p class="hint">외래어·한자어를 고운 우리말(고유어)로 바꾸어 적어요. 쓰는 동안 자동으로 초안이 저장돼요.</p>
+        <div class="mirror">
+          <div class="mirror-bulbs" aria-hidden="true"></div>
+          <label for="lyrics" class="sr-only">고유어로 바꾼 가사</label>
+          <textarea id="lyrics" maxlength="4000" spellcheck="false" placeholder="예) 오늘은 정말 기쁜 날, 너에게 마음을 전할래…&#10;&#10;여기에 우리 조가 바꾼 가사를 적어 주세요."></textarea>
+        </div>
+        <div class="lyrics-meta">
+          <span id="draftState" class="draft-state">✎ 아직 쓰지 않았어요</span>
+          <span id="count" class="count">0 / 4,000자</span>
+        </div>
+      </div>
+
+      <div class="step send-step">
+        <h2><span class="step-no">3</span> 무대로 보내기</h2>
+        <div id="dirtyNote" class="note" hidden>✏️ 고친 내용이 있어요. 다시 전송하면 새 작품으로 바뀌어요.</div>
+        <button id="sendBtn" class="send-btn" type="button">
+          <span class="send-ticket" aria-hidden="true">🎫</span>
+          <span class="send-label">선생님께 전송하기</span>
+        </button>
+        <div id="sendStatus" class="send-status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 골든벨 퀴즈 -->
+    <section id="quiz" class="panel" role="tabpanel" aria-labelledby="tabQuiz" hidden>
+      <div class="quiz-top">
+        <div id="qNumber" class="led q-number">대기 중</div>
+        <div id="qTimer" class="led cool q-timer" aria-live="off">--</div>
+      </div>
+      <div id="qBanner" class="q-banner" aria-live="polite">곧 퀴즈가 시작돼요!</div>
+      <div id="qChoices" class="song-grid quiz-grid"></div>
+      <div id="qStatus" class="q-status" aria-live="polite"></div>
+      <div id="qRanking" class="q-ranking" hidden></div>
+    </section>
+  </main>
+
+  <div id="pauseOverlay" class="overlay" hidden><div class="overlay-box">⏸ 잠시 멈춤<br><small>선생님이 다시 시작하면 고를 수 있어요</small></div></div>
+
+  <script type="module" src="js/team.js"></script>
+</body>
+</html>

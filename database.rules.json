@@ -1,0 +1,95 @@
+{
+  "rules": {
+    "owners": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "rooms": {
+      "$code": {
+        ".read": "auth != null && root.child('rooms').child($code).child('meta/ownerUid').val() === auth.uid",
+        ".write": "(auth != null && root.child('rooms').child($code).child('meta/ownerUid').val() === auth.uid) || (auth != null && !data.exists() && newData.child('meta/ownerUid').val() === auth.uid && auth.token.firebase.sign_in_provider === 'google.com')",
+        ".validate": "$code.matches(/^[A-Z0-9]{6}$/)",
+        "meta": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')"
+        },
+        "teams": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')"
+        },
+        "settings": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')"
+        },
+        "live": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')"
+        },
+        "reveals": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')"
+        },
+        "audio": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')",
+          ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display'"
+        },
+        "tts": {
+          ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display'"
+        },
+        "members": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && newData.exists()",
+            ".validate": "newData.child('key').isString() && ((newData.child('role').val() === 'team' && newData.child('teamId').isString() && newData.child('key').val() === root.child('rooms').child($code).child('teamKeys').child(newData.child('teamId').val()).val()) || (newData.child('role').val() === 'display' && newData.child('key').val() === root.child('rooms').child($code).child('displayKey').val()))"
+          }
+        },
+        "presence": {
+          ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')",
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid && (auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display'))"
+          }
+        },
+        "reopened": {
+          "$tid": {
+            ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid"
+          }
+        },
+        "submissions": {
+          "$tid": {
+            ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid",
+            ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid && newData.exists() && root.child('rooms').child($code).child('meta/closed').val() !== true && (root.child('rooms').child($code).child('meta/submissionsOpen').val() === true || root.child('rooms').child($code).child('reopened').child($tid).val() === true)",
+            ".validate": "newData.hasChildren(['songId', 'lyrics', 'submittedAt', 'version']) && newData.child('songId').isString() && newData.child('songId').val().matches(/^s([1-9]|10)$/) && newData.child('lyrics').isString() && newData.child('lyrics').val().length > 0 && newData.child('lyrics').val().length <= 4000 && ((auth != null && root.child('rooms').child($code).child('meta/ownerUid').val() === auth.uid) || (newData.child('submittedAt').val() === now && newData.child('editedByTeacher').val() !== true && ((!data.exists() && newData.child('version').val() === 1) || (data.exists() && newData.child('version').val() === data.child('version').val() + 1))))"
+          }
+        },
+        "drafts": {
+          "$tid": {
+            ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid",
+            ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid",
+            ".validate": "newData.child('lyrics').isString() && newData.child('lyrics').val().length <= 4000"
+          }
+        },
+        "answers": {
+          "$runId": {
+            "$tid": {
+              ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid",
+              ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid && newData.exists() && root.child('rooms').child($code).child('live/runId').val() === $runId && root.child('rooms').child($code).child('live/phase').val() === 'answering' && now < root.child('rooms').child($code).child('live/endsAt').val() && root.child('rooms').child($code).child('meta/closed').val() !== true && !(root.child('rooms').child($code).child('live/presenterExcluded').val() === true && root.child('rooms').child($code).child('live/presenterTeamId').val() === $tid)",
+              ".validate": "newData.hasChildren(['songId', 'at', 'by']) && newData.child('songId').isString() && newData.child('songId').val().matches(/^s([1-9]|10)$/) && ((auth != null && root.child('rooms').child($code).child('meta/ownerUid').val() === auth.uid) || (newData.child('by').val() === 'team' && newData.child('at').val() === now))"
+            }
+          }
+        },
+        "answered": {
+          "$runId": {
+            ".read": "auth != null && (root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' || root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'display')",
+            "$tid": {
+              ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $tid && newData.exists() && root.child('rooms').child($code).child('live/runId').val() === $runId && root.child('rooms').child($code).child('live/phase').val() === 'answering' && now < root.child('rooms').child($code).child('live/endsAt').val() && root.child('rooms').child($code).child('meta/closed').val() !== true && !(root.child('rooms').child($code).child('live/presenterExcluded').val() === true && root.child('rooms').child($code).child('live/presenterTeamId').val() === $tid)",
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        },
+        "notices": {
+          "$nid": {
+            ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('role').val() === 'team' && !data.exists()",
+            ".validate": "newData.child('teamId').val() === root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() && newData.child('message').isString() && newData.child('message').val().length <= 300 && newData.child('at').val() === now"
+          }
+        }
+      }
+    }
+  }
+}

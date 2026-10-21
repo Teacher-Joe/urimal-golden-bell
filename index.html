@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>우리말 골든벨 — 고유어 노래 맞히기</title>
+  <link rel="icon" href="img/bell.svg">
+  <link rel="stylesheet" href="css/stage.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body class="home-page">
+  <div class="theater-deco" aria-hidden="true">
+    <div class="spot s1"></div><div class="spot s2"></div><div class="spot s3"></div><div class="floor"></div>
+    <div class="curtain left"></div><div class="curtain right"></div><div class="valance"></div>
+  </div>
+  <canvas class="dust" aria-hidden="true"></canvas>
+
+  <main class="home">
+    <div id="bell" class="bell"></div>
+    <h1 class="gold-text">우리말 골든벨</h1>
+    <p class="slogan">우리말의 뜻을 듣고, <b>숨은 노래</b>를 찾아라!</p>
+
+    <section class="home-card">
+      <h2>🎬 선생님</h2>
+      <div id="loggedOut">
+        <p>구글 계정으로 로그인하면 수업방을 만들고, 다른 컴퓨터에서도 이어서 진행할 수 있어요.</p>
+        <button id="loginBtn" class="btn gold big" type="button">G 구글 계정으로 로그인</button>
+      </div>
+      <div id="loggedIn" hidden>
+        <p class="who">👩‍🏫 <b id="who"></b> <button id="logoutBtn" class="btn small ghost" type="button">로그아웃</button></p>
+        <form id="createForm">
+          <h3>새 수업방 만들기</h3>
+          <label>수업 이름 <input id="title" maxlength="40" value="우리말 골든벨"></label>
+          <label>조 수 <select id="teamCount"></select></label>
+          <button class="btn gold big" type="submit">🔔 수업방 만들기</button>
+        </form>
+        <div id="recent" class="recent"></div>
+      </div>
+      <div id="err" class="err" role="alert"></div>
+    </section>
+
+    <section class="home-card student">
+      <h2>🎤 학생: 우리 조로 들어가기</h2>
+      <p>선생님이 보여 주는 <b>우리 조 QR 코드</b>를 태블릿 카메라로 찍거나, 선생님이 알려 준 주소를 입력하세요.</p>
+    </section>
+  </main>
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>
